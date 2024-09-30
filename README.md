@@ -35,3 +35,44 @@ The Thermoflagger™ connects to a PTC thermistor via the PTCO pin. The built-in
 
 ### Overheat Detection
 The Thermoflagger™ provides a warning signal upon detecting a change in resistance in the PTC thermistor, indicating potential overheat conditions.
+
+## BQ24075 Overview
+The BQ24075 is part of the BQ2407x series of integrated Li-Ion linear chargers and system power path management devices, specifically designed for space-limited portable applications.
+
+This device features **Battery Disconnect Function** with a SYSOFF input, ensuring that the battery can be disconnected safely when needed.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3c1be43d-2115-4970-a679-217d54297f0e" alt="BQ24075_Circuit" width="45%">
+  <br>
+  <em>BQ24075 - Typical Application Circuit</em>
+</p>
+
+### Key Features
+- **Dynamic Power Path Management (DPPM):** Allows the system to power while simultaneously and independently charging the battery.
+- **Up to 1.5-A Charge Current:** Supports a maximum charge current of 1.5 A with a current monitoring output (ISET).
+- **Programmable Input Current Limit:** Configurable up to 1.5 A for wall adapters, providing flexibility in charging options.
+- **Safety Features:** Includes reverse current, short-circuit, and thermal protection for enhanced reliability.
+- **NTC Thermistor Input:** Integrates with NTC thermistors for temperature monitoring, ensuring safe operation during charging cycles.
+
+## Analysis for Adapting the Thermoflagger
+
+### Replacing PTC with NTC
+Most PTC thermistors I found have a reference resistance (double of R25) at 80°C or higher. We need a significant difference in resistivity between a normal operating temperature of 25°C and 60°C. Therefore, PTC thermistors are ruled out, leaving us with NTC thermistors as the viable option.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/d20d8772-2c4a-4124-bb67-d352f92badf7" alt="double of R25" width="50%">
+  <br>
+  <em>PTC - Rref(Double of R25)</em>
+</p>
+
+**In theory, it is possible to replace PTC thermistors with NTC thermistors**, as the Thermoflagger operates based on a current source and a comparator with a reference of 0.5 V.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0c9cbea9-79ae-4ac6-84d5-5ea60e52d53b" alt="NTC and PTC curves" width="65%">
+  <br>
+  <em>NTC and PTC curves</em>
+</p>
+
+Using a current of 1 µA, the total resistance required is 500 kΩ. Therefore, we will look for NTC thermistors with values of 470 kΩ and 1 MΩ to meet this requirement.
+
+
+
