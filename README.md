@@ -58,6 +58,7 @@ This device features **Battery Disconnect Function** with a SYSOFF input, ensuri
 
 ### Replacing PTC with NTC
 Most PTC thermistors I found have a reference resistance (double of R25) at 80°C or higher. We need a significant difference in resistivity between a normal operating temperature of 25°C and 60°C. Therefore, PTC thermistors are ruled out, leaving us with NTC thermistors as the viable option.
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/d20d8772-2c4a-4124-bb67-d352f92badf7" alt="double of R25" width="50%">
   <br>
@@ -72,7 +73,38 @@ Most PTC thermistors I found have a reference resistance (double of R25) at 80°
   <em>NTC and PTC curves</em>
 </p>
 
-Using a current of 1 µA, the total resistance required is 500 kΩ. Therefore, we will look for NTC thermistors with values of 470 kΩ and 1 MΩ to meet this requirement.
+Using a current of 1 µA, the total resistance required is 500 kΩ. We can also place a resistor in series with the NTC to adjust the activation threshold to the desired temperature, in our case, 60°C.
+
+
+<p align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <em>Normal state</em>
+        <br>
+        <br>
+        <img src="https://github.com/user-attachments/assets/7334bba1-d35f-40ae-a5e2-e861aebfc0cf" alt="Thermoflagger_WithNTC_25C" width="90%">
+        <br>
+        <em>Thermoflagger at 25°C</em>
+      </td>
+       <td align="center">
+        <em>Over temperature state</em>
+        <br>
+         <br>
+        <img src="https://github.com/user-attachments/assets/68b5112b-2c24-479b-a50c-300bfb70c391" alt="Thermoflagger_WithNTC_60C" width="90%">
+        <br>
+        <em>Thermoflagger at 60°C</em>
+      </td>
+    </tr>
+  </table>
+</p>
+
+
+
+
+
+
+
 
 
 
