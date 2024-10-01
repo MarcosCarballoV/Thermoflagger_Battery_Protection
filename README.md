@@ -154,7 +154,7 @@ The Thermoflagger has a hysteresis of 0.1V, with the switching points at ±0.05V
 From this point forward, we will not show any additional code. The full Wolfram Mathematica project, including the formulas and plots, will be available in the repository.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/9d061aa4-cf8f-4466-b2f4-644f36ba547f" alt="GraphNTC_1M" width="50%">
+  <img src="https://github.com/user-attachments/assets/755c1643-cd2c-466e-aed8-752f16b3aad3" alt="GraphNTC_1M" width="50%">
   <br>
   <em>Window Hysterisis Thermoflagger - Voltage vs Temperature</em>
 </p>
@@ -169,10 +169,51 @@ We have a region of 10°C, this is the temperature difference required to switch
 
 Setting the threshold to 0.45V at 60°C:
 - What is the best beta coefficient that minimizes the temperature difference (ΔTbeta)?
+ 
+By calculating the difference between the two points where the voltage is 0.55V and 0.45V as Beta varies, we obtain the following graph:
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ffc5eacf-10d9-4054-8c50-c40a8da73981" alt="Delta T vs Beta" width="50%">
+  <br>
+  <em>Delta TBeta vs Beta</em>
+</p>
 
+We see that to minimize the difference between the points (ΔTBeta), a beta coefficient of 3242K would give us a temperature range of 9.08°C. This is not a significant difference compared to our NTC with a beta of 4450K, which provides a range of 9.7°C.
 
+Finally, we need to analyze whether all beta values are feasible, given that we have a series resistance (R1). By plotting the value of the resistance \( R1 \) such that at 60°C, the NTC and the resistor have a voltage of 0.45V as beta varies, we obtain the following graph:
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e7fc613d-cccc-4d36-89c2-d94ed687ee7e" alt="Resistor R1 vs Beta" width="50%">
+  <br>
+  <em>Resistor R1 vs Beta</em>
+</p>
+
+For Resistance R1 to be positive, there must be a beta greater than 2200 K.
+
+### And NTC with 470 kΩ?
+
+We also need to analyze the same situation for an NTC with a resistance at ambient temperature (25°C) of 470 kΩ and a beta coefficient of 4450K.
+
+<p align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/2151c78c-58b1-40a5-ae1a-58aac2ca4817" alt="Delta T vs Beta 470K" width="90%">
+        <br>
+        <em>Delta TBeta vs Beta</em>
+      </td>
+       <td align="center">
+        <img src="https://github.com/user-attachments/assets/8cf8cc26-2c1a-428b-a55c-de041affad8c" alt="Resistor R1 vs Beta 470K" width="90%">
+        <br>
+        <em>Resistor R1 vs Beta</em>
+      </td>
+    </tr>
+  </table>
+</p>
+
+We observe that with the same beta of 4450K, we obtain an increase in the window size (ΔTBeta), reaching 16.7°C. However, even with the best possible beta, ΔTBeta has a value of 16.5°C. 
+
+This analysis leads us to conclude that the 1M NTC remains the best option for our design.
 
 
 
