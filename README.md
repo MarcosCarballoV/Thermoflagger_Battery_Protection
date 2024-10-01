@@ -99,6 +99,77 @@ Using a current of 1 µA, the total resistance required is 500 kΩ. We can also 
   </table>
 </p>
 
+## Optimizing the Design
+
+To develop an efficient battery protection system that disconnects at 60°C and reconnects after cooling, we must answer the following key questions:
+- Which NTC to choose: 470kΩ or 1MΩ?
+- Does the beta coefficient of the NTC matter or influence the design significantly?
+- What will be the battery disconnect and reconnect temperatures?
+
+### Using the NTCG164QH105HT1
+We will use the NTCG164QH105HT1 from TDK in the project, as it is available from Mouser and its datasheet provides reliable specifications:
+- Resistance: 1MΩ at 25°C.
+- Beta: 4450K.
+- [Product link](https://www.mouser.com/ProductDetail/TDK/NTCG164QH105HT1?qs=YdQ7Kj7W0bx%2FBItKU4CZUQ%3D%3D).
+
+
+## Simulation and Calculations
+
+The first step was to create a project in Wolfram Mathematica to derive formulas and generate graphs. The initial graph plotted the resistance of the NTC against temperature.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/4eeb9101-ac19-4f41-bb3b-02a9b928f371" alt="NTCG164QH105HT1" width="50%">
+  <br>
+  <em>NTC Resistance vs Temperature</em>
+</p>
+
+Next, we needed a simulation of a constant current source of 1µA and the NTC. For this, a project in Proteus was sufficient. A resistor in series with the NTC was added to the circuit.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/71359565-757a-4c36-bd1c-153b92a2cdb1" alt="ProteusSimul" width="15%">
+  <br>
+  <em>Proteus Simulation</em>
+</p>
+
+With this setup, we could proceed with the calculations to determine the required value of the series resistor (R1) to ensure battery disconnection at 60°C. For this, the voltage drop across the resistor and the NTC needed to be 0.45V. This is because the non-latching version of the Thermoflagger has a hysteresis of 0.1V, meaning the thresholds are at ±0.05V from 0.5V.
+
+```mathematica
+(*Parameters*)
+
+R25 = 1000000; (*Resistance at 25°C in ohms*)
+beta := 4750; (*Beta coefficient*)
+
+(*Function for the resistance at a temperature T in Kelvin*)
+R[T_] := R25*Exp[beta*(1/T - 1/298.15)]
+
+VoltageTH := 0.45;
+Current := 1 10^-6
+
+(*Calculate R1*)
+R1 = VoltageTH/Current - Round[R[60 + 273.15]]
+```
+Next, we plotted the voltage across the NTC as a function of temperature. This helps us visualize the cutoff and transition regions of the Thermoflagger, considering the hysteresis.
+The Thermoflagger has a hysteresis of 0.1V, with the switching points at ±0.05V from the 0.5V reference. The goal of the graph is to show how the voltage changes with temperature and identify the points where the logic state of the Thermoflagger transitions between high and low.
+
+From this point forward, we will not show any additional code. The full Wolfram Mathematica project, including the formulas and plots, will be available in the repository.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/9d061aa4-cf8f-4466-b2f4-644f36ba547f" alt="GraphNTC_1M" width="50%">
+  <br>
+  <em>Window Hysterisis Thermoflagger - Voltage vs Temperature</em>
+</p>
+
+This configuration gives us a region:
+- At 50°C, the NTC and the resistor have a voltage of 0.55V.
+- At 60°C, the NTC and the resistor have a voltage of 0.45V.
+
+We have a region of 10°C, this is the temperature difference required to switch between logic states.
+
+### Which Beta is the Best?
+
+Setting the threshold to 0.45V at 60°C:
+- What is the best beta coefficient that minimizes the temperature difference (ΔTbeta)?
+
 
 
 
