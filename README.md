@@ -211,7 +211,7 @@ We also need to analyze the same situation for an NTC with a resistance at ambie
   </table>
 </p>
 
-We observe that with the same beta of 4450K, we obtain an increase in the window size (ΔTBeta), reaching 16.7°C. However, even with the best possible beta, ΔTBeta has a value of 16.5°C. 
+We observe that with the same beta of 4450K, we obtain an increase in the window size (ΔTBeta), reaching 16.82°C. However, even with the best possible beta, ΔTBeta has a value of 16.5°C. 
 
 This analysis leads us to conclude that the 1M NTC remains the best option for our design.
 
@@ -222,21 +222,25 @@ The schematic is based on the BQ24075 battery charger and the Thermoflagger. In 
 To measure current consumption in the overheat protection state, a TH jumper was added to connect a power consumption meter, such as the PPK2 from Nordic. Additionally, LEDs are included as a load, and another indicates when the battery starts charging, alongside a USB connector to power the battery charging.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/93a435f7-a561-471e-ac88-7dd894134113" alt="Schematic" width="50%">
+  <img src="https://github.com/user-attachments/assets/93a435f7-a561-471e-ac88-7dd894134113" alt="Schematic" width="60%">
   <br>
   <em>Schematic Design</em>
 </p>
 
 ## 3D Model Design
 
-*** Insert 3D STP model images ***
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/d2d6192b-42b7-4e67-8d3b-f268655b55dc" alt="Thermoflagger PCB Design Render" width="80%">
+  <br>
+  <em>Thermoflagger PCB Design Render</em>
+</p>
 
 ## Current Discharge in Overheat
 
 Using the PPK2, the battery current consumption was measured when the Thermoflagger sends a high logic signal to the SYSOFF pin, disconnecting the battery from the load circuit, which is seen at the BQ24075's output (in this design, a LED that consumes around 0.5 mA).
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/e607db2f-5f48-4c43-b7df-201ea66388b0" alt="CurrentPPK2" width="50%">
+  <img src="https://github.com/user-attachments/assets/e607db2f-5f48-4c43-b7df-201ea66388b0" alt="CurrentPPK2" width="80%">
   <br>
   <em>Current Discharge in Overheat with PPK2</em>
 </p>
@@ -250,13 +254,10 @@ When the NTC reaches a high temperature, the BQ24075 disconnects the battery fro
 Once it cools down sufficiently, to around 50°C, the Thermoflagger sets the SYSOFF pin to LOW, reconnecting the battery to the system.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/acccf5ff-643d-49a2-848b-4c1c3ac2da23" alt="Battery Discconect" width="50%">
+  <img src="https://github.com/user-attachments/assets/acccf5ff-643d-49a2-848b-4c1c3ac2da23" alt="Battery Discconect" width="25%">
   <br>
   <em>Battery Disconnect</em>
 </p>
 
 It is shown that the battery charges via USB power with a current of around 600 mA, but when it reaches the overheat state, this drops to 0 mA. It is possible that the battery continues to charge with a current in the range of nanoamperes (nA) or a few microamperes (µA).
-
-
-
 
