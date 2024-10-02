@@ -215,7 +215,47 @@ We observe that with the same beta of 4450K, we obtain an increase in the window
 
 This analysis leads us to conclude that the 1M NTC remains the best option for our design.
 
+## Schematics
 
+The schematic is based on the BQ24075 battery charger and the Thermoflagger. In this design, the PCB was intended to test different Thermoflagger models (with Latch, without Latch, Push-Pull, or OpenDrain). Therefore, the PCB includes SMD jumpers, pull-up resistors, a button, and a circuit to invert the digital signal from the Thermoflagger. However, during testing, only the non-Latch, Push-Pull model (TCTH011AE) was required, and there was no need to invert the signal.
+
+To measure current consumption in the overheat protection state, a TH jumper was added to connect a power consumption meter, such as the PPK2 from Nordic. Additionally, LEDs are included as a load, and another indicates when the battery starts charging, alongside a USB connector to power the battery charging.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/93a435f7-a561-471e-ac88-7dd894134113" alt="Schematic" width="50%">
+  <br>
+  <em>Schematic Design</em>
+</p>
+
+## 3D Model Design
+
+*** Insert 3D STP model images ***
+
+## Current Discharge in Overheat
+
+Using the PPK2, the battery current consumption was measured when the Thermoflagger sends a high logic signal to the SYSOFF pin, disconnecting the battery from the load circuit, which is seen at the BQ24075's output (in this design, a LED that consumes around 0.5 mA).
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e607db2f-5f48-4c43-b7df-201ea66388b0" alt="CurrentPPK2" width="50%">
+  <br>
+  <em>Current Discharge in Overheat with PPK2</em>
+</p>
+
+It was observed that the Thermoflagger is the only component consuming current in the overheat state, with an average consumption of approximately 2.2 µA.
+
+## Disconnect Battery During Charging?
+
+When the NTC reaches a high temperature, the BQ24075 disconnects the battery from the load. This disables the device from running on the battery, but it can still function via USB. This means that in an overheat state, the device can only operate with USB power; however, it will not charge the battery as it remains disconnected.
+
+Once it cools down sufficiently, to around 50°C, the Thermoflagger sets the SYSOFF pin to LOW, reconnecting the battery to the system.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/acccf5ff-643d-49a2-848b-4c1c3ac2da23" alt="Battery Discconect" width="50%">
+  <br>
+  <em>Battery Disconnect</em>
+</p>
+
+It is shown that the battery charges via USB power with a current of around 600 mA, but when it reaches the overheat state, this drops to 0 mA. It is possible that the battery continues to charge with a current in the range of nanoamperes (nA) or a few microamperes (µA).
 
 
 
